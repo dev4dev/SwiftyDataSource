@@ -1,5 +1,5 @@
 //
-//  TestCell.swift
+//  ManualCell.swift
 //  DataSource
 //
 //  Created by Alex Antonyuk on 12/1/17.
@@ -8,13 +8,10 @@
 
 import UIKit
 
-final class TestCell: UITableViewCell, DataSourceCellAutomatic {
+final class ManualCell: UITableViewCell, DataSourceCell {
 
-    typealias Model = Person
-    var model: Person? {
-        didSet {
-            textLabel?.text = model?.name
-        }
+    static func configure(cell: ManualCell, model: Person) {
+        cell.textLabel?.text = model.name
     }
 
     override func awakeFromNib() {
@@ -27,4 +24,5 @@ final class TestCell: UITableViewCell, DataSourceCellAutomatic {
 
         // Configure the view for the selected state
     }
+    
 }

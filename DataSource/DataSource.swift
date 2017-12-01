@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: - Model
 protocol DataSourceModel {
     static var _Model_Name: String { get }
     var _Model_Name: String { get }
@@ -23,14 +24,26 @@ extension DataSourceModel {
     }
 }
 
-
-protocol DataSourceCell {
+// MARK: - Cell
+protocol DataSourceCell: class {
     associatedtype Model: DataSourceModel
     static func configure(cell: Self, model: Model)
 }
 
+protocol DataSourceCellAutomatic: DataSourceCell {
+    var model: Model? { get set }
+}
+
+extension DataSourceCellAutomatic {
+    static func configure(cell: Self, model: Model) {
+        cell.model = model
+    }
+}
+
+// MARK: - Descriptor
 struct CellDescriptor {
-    enum Kind {
+
+    enum CellKind {
         case klass(klass: AnyClass)
         case nib(name: String)
 
@@ -43,10 +56,11 @@ struct CellDescriptor {
             }
         }
     }
+
     var identifier: String {
         return kind.identifier
     }
-    let kind: Kind
+    let kind: CellKind
     let modelClassName: String
 
     let configure: (UITableViewCell, Any) -> Void
@@ -60,7 +74,16 @@ struct CellDescriptor {
         }
     }
 
-    init<Cell: DataSourceCell>(kind: Kind, cellClass: Cell.Type) {
+    init<Cell: DataSourceCell>(cellClass: Cell.Type) {
+        self.init(kind: CellKind.klass(klass: cellClass), cellClass: cellClass)
+    }
+
+    init<Cell: DataSourceCell>(nibClass: Cell.Type) {
+        let nibName = String(String(describing: type(of: nibClass)).components(separatedBy: ".").first!)
+        self.init(kind: CellKind.nib(name: nibName), cellClass: nibClass)
+    }
+
+    private init<Cell: DataSourceCell>(kind: CellKind, cellClass: Cell.Type) {
         self.kind = kind
         self.modelClassName = Cell.Model._Model_Name
         self.configure = { cell, model in
@@ -69,6 +92,7 @@ struct CellDescriptor {
     }
 }
 
+// MARK: - DataSource
 final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     let tableView: UITableView
     private var descriptors: [String: CellDescriptor] = [:]

@@ -8,12 +8,15 @@
 
 import UIKit
 
-class ClassCell: UITableViewCell, DataSourceCell {
-    typealias Model = Company
-    static func configure(cell: ClassCell, model: Company) {
-        cell.model = model
-    }
+final class ClassCell: UITableViewCell, DataSourceCellAutomatic {
 
+    typealias Model = Company
+    var model: Company? {
+        didSet {
+            textLabel?.text = model?.name
+            detailTextLabel?.text = model?.address
+        }
+    }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)
@@ -21,13 +24,6 @@ class ClassCell: UITableViewCell, DataSourceCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    var model: Company? {
-        didSet {
-            textLabel?.text = model?.name
-            detailTextLabel?.text = model?.address
-        }
     }
 
     override func awakeFromNib() {

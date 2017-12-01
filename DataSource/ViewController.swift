@@ -20,14 +20,11 @@ class ViewController: UIViewController {
 
         dataSource = DataSource(tableView: tableView)
 
-        let personDescr = CellDescriptor(kind: .nib(name: "TestCell")) { (cell: TestCell, model: Person) in
-            cell.title = model.name
-        }
+
+        let personDescr = CellDescriptor(kind: .nib(name: "TestCell"), cellClass: TestCell.self)
         dataSource.register(cellDescriptor: personDescr)
 
-        let companyDescr = CellDescriptor(kind: .klass(klass: ClassCell.self)) { (cell: ClassCell, model: Company) in
-            cell.model = model
-        }
+        let companyDescr = CellDescriptor(kind: .klass(klass: ClassCell.self), cellClass: ClassCell.self)
         dataSource.register(cellDescriptor: companyDescr)
         dataSource.addData([
             Person(name: "Sponge bob", address: "Under the see"),

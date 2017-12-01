@@ -23,6 +23,12 @@ extension DataSourceModel {
     }
 }
 
+
+protocol DataSourceCell {
+    associatedtype Model: DataSourceModel
+    static func configure(cell: Self, model: Model)
+}
+
 struct CellDescriptor {
     enum Kind {
         case klass(klass: AnyClass)
@@ -54,11 +60,11 @@ struct CellDescriptor {
         }
     }
 
-    init<Cell: UITableViewCell, Model: DataSourceModel>(kind: Kind, _ config: @escaping (Cell, Model) -> Void){
+    init<Cell: DataSourceCell>(kind: Kind, cellClass: Cell.Type) {
         self.kind = kind
-        self.modelClassName = Model._Model_Name
+        self.modelClassName = Cell.Model._Model_Name
         self.configure = { cell, model in
-            config(cell as! Cell, model as! Model)
+            cellClass.configure(cell: cell as! Cell, model: model as! Cell.Model)
         }
     }
 }

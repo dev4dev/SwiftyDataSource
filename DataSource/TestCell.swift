@@ -8,11 +8,13 @@
 
 import UIKit
 
-class TestCell: UITableViewCell {
+class TestCell: UITableViewCell, DataSourceCell {
+    typealias Model = Person
 
-    var title: String? {
+
+    var model: Person? {
         didSet {
-            textLabel?.text = title
+            textLabel?.text = model?.name
         }
     }
 
@@ -26,5 +28,8 @@ class TestCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
+    static func configure(cell: TestCell, model: TestCell.Model) {
+        cell.model = model
+    }
 }

@@ -8,7 +8,12 @@
 
 import UIKit
 
-class ClassCell: UITableViewCell {
+class ClassCell: UITableViewCell, DataSourceCell {
+    typealias Model = Company
+    static func configure(cell: ClassCell, model: Company) {
+        cell.model = model
+    }
+
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)

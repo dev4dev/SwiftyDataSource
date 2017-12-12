@@ -47,7 +47,6 @@ class ViewController: UIViewController {
         dataSource.register(section: section2)
         dataSource.add(section: section2)
 
-        test(model: Person(name: "ok", address: "OK"))
         dataSource.onSelect { (model: Person) in
             print("Person selected \(model.name)")
         }
@@ -63,12 +62,5 @@ class ViewController: UIViewController {
             }
         }
     }
-
-    func test<Model>(model: Model) {
-        print(String(describing: type(of: Model.self)))
-        print(String(describing: type(of: model)))
-    }
-
-
 }
 

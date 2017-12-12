@@ -27,7 +27,7 @@ extension DataSourceModel {
 // MARK: - Cell
 protocol DataSourceCell: class {
     associatedtype Model: DataSourceModel
-    static func configure(cell: Self, model: Model)
+    static func configure(cell: Self, indexPath: IndexPath, model: Model)
 }
 
 protocol DataSourceModelCell: DataSourceCell {
@@ -35,7 +35,7 @@ protocol DataSourceModelCell: DataSourceCell {
 }
 
 extension DataSourceModelCell {
-    static func configure(cell: Self, model: Model) {
+    static func configure(cell: Self, indexPath: IndexPath, model: Model) {
         cell.model = model
     }
 }
@@ -63,7 +63,7 @@ struct CellDescriptor {
     let kind: CellKind
     let modelClassName: String
 
-    let configure: (UITableViewCell, Any) -> Void
+    let configure: (UITableViewCell, IndexPath, Any) -> Void
 
     func register(in tableView: UITableView) {
         switch kind {
@@ -83,11 +83,19 @@ struct CellDescriptor {
         self.init(kind: CellKind.nib(name: nibName), cellClass: nibClass)
     }
 
+    init<Cell: UITableViewCell, Model: DataSourceModel>(kind: CellKind, _ config: @escaping (Cell, Model) -> Void) {
+        self.kind = kind
+        self.configure = { cell, indexPath, model in
+            config(cell as! Cell, model as! Model)
+        }
+        self.modelClassName = Model._Model_Name
+    }
+
     private init<Cell: DataSourceCell>(kind: CellKind, cellClass: Cell.Type) {
         self.kind = kind
         self.modelClassName = Cell.Model._Model_Name
-        self.configure = { cell, model in
-            cellClass.configure(cell: cell as! Cell, model: model as! Cell.Model)
+        self.configure = { cell, indexPath, model in
+            cellClass.configure(cell: cell as! Cell, indexPath: indexPath, model: model as! Cell.Model)
         }
     }
 }
@@ -143,7 +151,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
 
         let cell = tableView.dequeueReusableCell(withIdentifier: descriptor.identifier, for: indexPath)
-        descriptor.configure(cell, item)
+        descriptor.configure(cell, indexPath, item)
         return cell
     }
 

@@ -26,10 +26,16 @@ class ViewController: UIViewController {
 
         let companyDescr = CellDescriptor(cellClass: ClassCell.self)
         dataSource.register(cellDescriptor: companyDescr)
+
+        dataSource.register(cellDescriptor: CellDescriptor(kind: .klass(klass: UITableViewCell.self), { (cell, model: Dummy) in
+            cell.textLabel?.text = model.name
+        }))
+
         dataSource.addData([
             Person(name: "Sponge bob", address: "Under the see"),
             Person(name: "Patrick", address: "Near Sponge Bob"),
-            Company(name: "EA", address: "Shitload")
+            Company(name: "EA", address: "Shitload"),
+            Dummy(name: "So simple")
         ])
 
         test(model: Person(name: "ok", address: "OK"))

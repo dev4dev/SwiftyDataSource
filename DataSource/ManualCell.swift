@@ -10,19 +10,7 @@ import UIKit
 
 final class ManualCell: UITableViewCell, DataSourceCell {
 
-    static func configure(cell: ManualCell, model: Person) {
-        cell.textLabel?.text = model.name
+    static func configure(cell: ManualCell, indexPath: IndexPath, model: Person) {
+        cell.textLabel?.text = model.name + " - row \(indexPath.row)"
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }

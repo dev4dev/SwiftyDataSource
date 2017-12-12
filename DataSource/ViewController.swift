@@ -20,14 +20,10 @@ class ViewController: UIViewController {
 
         dataSource = DataSource(tableView: tableView)
 
-        let personDescr = CellDescriptor(nibClass: PersonCell.self)
-        dataSource.register(cellDescriptor: personDescr)
-
-        let companyDescr = CellDescriptor(cellClass: CompanyCell.self)
-        dataSource.register(cellDescriptor: companyDescr)
-
-        dataSource.register(cellDescriptor: CellDescriptor(kind: .klass(klass: UITableViewCell.self), { (cell, model: Dummy) in
-            cell.textLabel?.text = model.name
+        dataSource.register(cellDescriptor: CellDescriptor(nibClass: PersonCell.self))
+        dataSource.register(cellDescriptor: CellDescriptor(cellClass: CompanyCell.self))
+        dataSource.register(cellDescriptor: CellDescriptor(kind: .klass(klass: UITableViewCell.self), { (cell, ip, model: Dummy) in
+            cell.textLabel?.text = model.name + " - \(ip)"
         }))
 
         let section1 = DataSourceSection(data: [

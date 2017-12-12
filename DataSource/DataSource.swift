@@ -83,10 +83,10 @@ struct CellDescriptor {
         self.init(kind: DataSourceRegisteredViewKind.nib(name: nibName), cellClass: nibClass)
     }
 
-    init<Cell: UITableViewCell, Model: DataSourceModel>(kind: DataSourceRegisteredViewKind, _ config: @escaping (Cell, Model) -> Void) {
+    init<Cell: UITableViewCell, Model: DataSourceModel>(kind: DataSourceRegisteredViewKind, _ config: @escaping (Cell, IndexPath, Model) -> Void) {
         self.kind = kind
         self.configure = { cell, indexPath, model in
-            config(cell as! Cell, model as! Model)
+            config(cell as! Cell, indexPath, model as! Model)
         }
         self.modelClassName = Model._Model_Name
     }

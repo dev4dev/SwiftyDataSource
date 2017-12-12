@@ -14,6 +14,7 @@ final class PersonCell: UITableViewCell, DataSourceModelCell {
     var model: Person? {
         didSet {
             textLabel?.text = model?.name
+            detailTextLabel?.text = model?.address
         }
     }
 }

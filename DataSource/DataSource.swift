@@ -30,11 +30,11 @@ protocol DataSourceCell: class {
     static func configure(cell: Self, model: Model)
 }
 
-protocol DataSourceCellAutomatic: DataSourceCell {
+protocol DataSourceModelCell: DataSourceCell {
     var model: Model? { get set }
 }
 
-extension DataSourceCellAutomatic {
+extension DataSourceModelCell {
     static func configure(cell: Self, model: Model) {
         cell.model = model
     }

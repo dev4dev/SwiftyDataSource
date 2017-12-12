@@ -20,23 +20,32 @@ class ViewController: UIViewController {
 
         dataSource = DataSource(tableView: tableView)
 
-
-        let personDescr = CellDescriptor(nibClass: ManualCell.self)
+        let personDescr = CellDescriptor(nibClass: PersonCell.self)
         dataSource.register(cellDescriptor: personDescr)
 
-        let companyDescr = CellDescriptor(cellClass: ClassCell.self)
+        let companyDescr = CellDescriptor(cellClass: CompanyCell.self)
         dataSource.register(cellDescriptor: companyDescr)
 
         dataSource.register(cellDescriptor: CellDescriptor(kind: .klass(klass: UITableViewCell.self), { (cell, model: Dummy) in
             cell.textLabel?.text = model.name
         }))
 
-        dataSource.addData([
+        let section1 = DataSourceSection(data: [
             Person(name: "Sponge bob", address: "Under the see"),
             Person(name: "Patrick", address: "Near Sponge Bob"),
-            Company(name: "EA", address: "Shitload"),
+            Company(name: "EA", address: "Shitload")
+        ])
+        section1.header = .view(DataSourceSection.HeaderFooterViewInfo(identifier: "Header", title: "WAT?", kind: .klass(klass: SectionHeaderView.self), height: 45.0))
+        section1.footer = .title("meh 🤖")
+        dataSource.register(section: section1)
+        dataSource.add(section: section1)
+
+        let section2 = DataSourceSection(data: [
             Dummy(name: "So simple")
         ])
+        section2.header = .title("lol kek")
+        dataSource.register(section: section2)
+        dataSource.add(section: section2)
 
         test(model: Person(name: "ok", address: "OK"))
         dataSource.onSelect { (model: Person) in

@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class TestCell: UITableViewCell, DataSourceModelCell {
+final class PersonCell: UITableViewCell, DataSourceModelCell {
 
     typealias Model = Person
     var model: Person? {

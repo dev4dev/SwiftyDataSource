@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6319CDF71FDFDE79007D4006 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6319CDF61FDFDE79007D4006 /* Dummy.swift */; };
+		6319CDF91FE001A0007D4006 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6319CDF81FE001A0007D4006 /* SectionHeaderView.swift */; };
 		635262A71FD19914000E57D1 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635262A61FD19914000E57D1 /* Company.swift */; };
 		63666A351FD1B15500CE3250 /* ManualCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63666A331FD1B15500CE3250 /* ManualCell.swift */; };
 		63666A361FD1B15500CE3250 /* ManualCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63666A341FD1B15500CE3250 /* ManualCell.xib */; };
@@ -17,14 +18,16 @@
 		6378C2701FD189BF000D7CF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6378C26F1FD189BF000D7CF7 /* Assets.xcassets */; };
 		6378C2731FD189BF000D7CF7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6378C2711FD189BF000D7CF7 /* LaunchScreen.storyboard */; };
 		6378C27B1FD189C8000D7CF7 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6378C27A1FD189C8000D7CF7 /* DataSource.swift */; };
-		6378C27E1FD18DE1000D7CF7 /* TestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6378C27C1FD18DE1000D7CF7 /* TestCell.swift */; };
-		6378C27F1FD18DE1000D7CF7 /* TestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6378C27D1FD18DE1000D7CF7 /* TestCell.xib */; };
-		6378C2811FD18DF9000D7CF7 /* ClassCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6378C2801FD18DF9000D7CF7 /* ClassCell.swift */; };
+		6378C27E1FD18DE1000D7CF7 /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6378C27C1FD18DE1000D7CF7 /* PersonCell.swift */; };
+		6378C27F1FD18DE1000D7CF7 /* PersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6378C27D1FD18DE1000D7CF7 /* PersonCell.xib */; };
+		6378C2811FD18DF9000D7CF7 /* CompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6378C2801FD18DF9000D7CF7 /* CompanyCell.swift */; };
 		6378C2831FD18E33000D7CF7 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6378C2821FD18E33000D7CF7 /* Person.swift */; };
+		AE00D72FAC2FD76F4D52387C /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F37A1A4F597A3D7743AD59 /* SnapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6319CDF61FDFDE79007D4006 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		6319CDF81FE001A0007D4006 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		635262A61FD19914000E57D1 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		63666A331FD1B15500CE3250 /* ManualCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualCell.swift; sourceTree = "<group>"; };
 		63666A341FD1B15500CE3250 /* ManualCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ManualCell.xib; sourceTree = "<group>"; };
@@ -36,10 +39,11 @@
 		6378C2721FD189BF000D7CF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6378C2741FD189BF000D7CF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6378C27A1FD189C8000D7CF7 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
-		6378C27C1FD18DE1000D7CF7 /* TestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCell.swift; sourceTree = "<group>"; };
-		6378C27D1FD18DE1000D7CF7 /* TestCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestCell.xib; sourceTree = "<group>"; };
-		6378C2801FD18DF9000D7CF7 /* ClassCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassCell.swift; sourceTree = "<group>"; };
+		6378C27C1FD18DE1000D7CF7 /* PersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
+		6378C27D1FD18DE1000D7CF7 /* PersonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonCell.xib; sourceTree = "<group>"; };
+		6378C2801FD18DF9000D7CF7 /* CompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCell.swift; sourceTree = "<group>"; };
 		6378C2821FD18E33000D7CF7 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		65F37A1A4F597A3D7743AD59 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,17 +51,57 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE00D72FAC2FD76F4D52387C /* SnapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A03EE32767BFCA865054FD0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65F37A1A4F597A3D7743AD59 /* SnapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6319CDFA1FE003A3007D4006 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6378C27C1FD18DE1000D7CF7 /* PersonCell.swift */,
+				6378C27D1FD18DE1000D7CF7 /* PersonCell.xib */,
+				6378C2801FD18DF9000D7CF7 /* CompanyCell.swift */,
+				63666A331FD1B15500CE3250 /* ManualCell.swift */,
+				63666A341FD1B15500CE3250 /* ManualCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6319CDFC1FE003B1007D4006 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6378C2821FD18E33000D7CF7 /* Person.swift */,
+				635262A61FD19914000E57D1 /* Company.swift */,
+				6319CDF61FDFDE79007D4006 /* Dummy.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6319CDFD1FE003B7007D4006 /* HeaderFooter */ = {
+			isa = PBXGroup;
+			children = (
+				6319CDF81FE001A0007D4006 /* SectionHeaderView.swift */,
+			);
+			path = HeaderFooter;
+			sourceTree = "<group>";
+		};
 		6378C25C1FD189BF000D7CF7 = {
 			isa = PBXGroup;
 			children = (
 				6378C2671FD189BF000D7CF7 /* DataSource */,
 				6378C2661FD189BF000D7CF7 /* Products */,
+				3A03EE32767BFCA865054FD0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,14 +123,9 @@
 				6378C2711FD189BF000D7CF7 /* LaunchScreen.storyboard */,
 				6378C2741FD189BF000D7CF7 /* Info.plist */,
 				6378C27A1FD189C8000D7CF7 /* DataSource.swift */,
-				6378C27C1FD18DE1000D7CF7 /* TestCell.swift */,
-				6378C27D1FD18DE1000D7CF7 /* TestCell.xib */,
-				6378C2801FD18DF9000D7CF7 /* ClassCell.swift */,
-				6378C2821FD18E33000D7CF7 /* Person.swift */,
-				635262A61FD19914000E57D1 /* Company.swift */,
-				6319CDF61FDFDE79007D4006 /* Dummy.swift */,
-				63666A331FD1B15500CE3250 /* ManualCell.swift */,
-				63666A341FD1B15500CE3250 /* ManualCell.xib */,
+				6319CDFA1FE003A3007D4006 /* Cells */,
+				6319CDFC1FE003B1007D4006 /* Models */,
+				6319CDFD1FE003B7007D4006 /* HeaderFooter */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -101,6 +140,7 @@
 				6378C2611FD189BF000D7CF7 /* Sources */,
 				6378C2621FD189BF000D7CF7 /* Frameworks */,
 				6378C2631FD189BF000D7CF7 /* Resources */,
+				656D80E2008CAB573E7C9970 /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -151,7 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6378C2731FD189BF000D7CF7 /* LaunchScreen.storyboard in Resources */,
-				6378C27F1FD18DE1000D7CF7 /* TestCell.xib in Resources */,
+				6378C27F1FD18DE1000D7CF7 /* PersonCell.xib in Resources */,
 				63666A361FD1B15500CE3250 /* ManualCell.xib in Resources */,
 				6378C2701FD189BF000D7CF7 /* Assets.xcassets in Resources */,
 				6378C26E1FD189BF000D7CF7 /* Main.storyboard in Resources */,
@@ -159,6 +199,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		656D80E2008CAB573E7C9970 /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
+			);
+			name = Carthage;
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			showEnvVarsInLog = 1;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6378C2611FD189BF000D7CF7 /* Sources */ = {
@@ -168,12 +228,13 @@
 				6378C2831FD18E33000D7CF7 /* Person.swift in Sources */,
 				63666A351FD1B15500CE3250 /* ManualCell.swift in Sources */,
 				6378C27B1FD189C8000D7CF7 /* DataSource.swift in Sources */,
-				6378C27E1FD18DE1000D7CF7 /* TestCell.swift in Sources */,
+				6378C27E1FD18DE1000D7CF7 /* PersonCell.swift in Sources */,
 				6378C26B1FD189BF000D7CF7 /* ViewController.swift in Sources */,
 				635262A71FD19914000E57D1 /* Company.swift in Sources */,
 				6378C2691FD189BF000D7CF7 /* AppDelegate.swift in Sources */,
+				6319CDF91FE001A0007D4006 /* SectionHeaderView.swift in Sources */,
 				6319CDF71FDFDE79007D4006 /* Dummy.swift in Sources */,
-				6378C2811FD18DF9000D7CF7 /* ClassCell.swift in Sources */,
+				6378C2811FD18DF9000D7CF7 /* CompanyCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +294,10 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -290,6 +355,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

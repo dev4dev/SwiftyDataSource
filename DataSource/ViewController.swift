@@ -26,23 +26,30 @@ class ViewController: UIViewController {
             cell.textLabel?.text = model.name + " - \(ip)"
         }))
 
+        // section 1
         let section1 = DataSourceSection(data: [
             Person(name: "Sponge bob", address: "Under the see"),
             Person(name: "Patrick", address: "Near Sponge Bob"),
             Company(name: "EA", address: "Shitload")
         ])
-        section1.header = .view(DataSourceSection.HeaderFooterViewInfo(identifier: "Header", title: "WAT?", kind: .klass(klass: SectionHeaderView.self), height: 45.0))
+        section1.header = .view(DataSourceSection.HeaderFooterViewInfo(identifier: "Header", kind: .klass(klass: SectionHeaderView.self), height: 45.0) { (view: SectionHeaderView, section) in
+            view.title = "Wassup?"
+        })
         section1.footer = .title("meh 🤖")
         dataSource.register(section: section1)
         dataSource.add(section: section1)
 
+        // secion
         let section2 = DataSourceSection(data: [
             Dummy(name: "So simple")
         ])
-        section2.header = .title("lol kek")
+        section2.header = .view(DataSourceSection.HeaderFooterViewInfo(identifier: "NibHeader", kind: .nib(name: "NibHeaderView"), height: 24.0, { (view: NibHeaderView, section) in
+            view.label.text = "Lorem Ipsum"
+        }))
         dataSource.register(section: section2)
         dataSource.add(section: section2)
 
+        // selection
         dataSource.onSelect { (model: Person) in
             print("Person selected \(model.name)")
         }

@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class SectionHeaderView: UITableViewHeaderFooterView, TitledView {
+final class SectionHeaderView: UITableViewHeaderFooterView {
 
     var title: String? {
         didSet {

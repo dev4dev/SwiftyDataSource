@@ -8,7 +8,8 @@
 
 import UIKit
 
-final class DataSourceSection  {
+/// Class which represents Section in DataSource
+final class DataSourceSection {
     enum HeaderViewKind {
         case title(String)
         case view(HeaderFooterViewInfo)

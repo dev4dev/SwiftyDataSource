@@ -12,13 +12,26 @@ import UIKit
 
 // MARK: - DataSource
 final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
+
+    /// Table View instance
     let tableView: UITableView
+
+
+    /// Cell descriptiors associated with the model they is working with
     private var descriptors: [String: CellDescriptor] = [:]
+
+    /// Selection callbacks associated with the model they will for for
     private var callbacks: [String: (DataSourceModel) -> Void] = [:]
+
+    /// General selection callback which will be called for every row
     var onSelectCallback: (DataSourceModel) -> () = { _ in }
 
+    /// Internal store of sections
     private var sections: [DataSourceSection] = []
 
+    /// Initializer accepts table view which will be server by this data source
+    ///
+    /// - Parameter tableView: TableView
     init(tableView: UITableView) {
         self.tableView = tableView
 
@@ -31,16 +44,27 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         self.tableView.sectionFooterHeight = UITableViewAutomaticDimension
     }
 
+    /// Register Cell Descriptor
+    ///
+    /// - Parameter cellDescriptor: Cell Descriptor
     func register(cellDescriptor: CellDescriptor) {
         cellDescriptor.register(in: tableView)
         descriptors[cellDescriptor.modelClassName] = cellDescriptor
     }
 
+
+    /// Register section. Used when section has header/footer instantiated from class/nib
+    ///
+    /// - Parameter section: Section object
     func register(section: DataSourceSection) {
         section.header?.info?.register(in: tableView)
         section.footer?.info?.register(in: tableView)
     }
 
+    /// Add section to the data source
+    ///
+    /// - Parameter section: Section
+    /// - Returns: Index were section was added at
     @discardableResult
     func add(section: DataSourceSection) -> Int {
         let index = sections.count
@@ -49,6 +73,9 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         return index
     }
 
+    /// Registers model specific row selection callback
+    ///
+    /// - Parameter callback: Callback which accepts model object
     func onSelect<Model: DataSourceModel>(_ callback: @escaping (Model) -> Void) {
         callbacks[Model._Model_Name] = { model in
             callback(model as! Model)
@@ -56,11 +83,21 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
 
     // MARK: -
+
+    /// Returns section at index if exists
+    ///
+    /// - Parameter index: Index of section
+    /// - Returns: Data source section or nil if index if out of bounds
     private func section(at index: Int) -> DataSourceSection? {
         guard index < sections.count else { return nil }
         return sections[index]
     }
 
+
+    /// Returns object at index pathif exists
+    ///
+    /// - Parameter indexPath: Index path of object
+    /// - Returns: Generic DataSourceModel object or nil if not found
     private func object(at indexPath: IndexPath) -> DataSourceModel? {
         return section(at: indexPath.section)?.object(at: indexPath.row)
     }

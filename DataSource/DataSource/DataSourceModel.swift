@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Protocol Model classes should conform to to be used with DataSource
 protocol DataSourceModel {
     static var _Model_Name: String { get }
     var _Model_Name: String { get }

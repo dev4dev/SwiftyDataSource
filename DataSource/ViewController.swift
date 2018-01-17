@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol NamedModel {
+    var name: String { get }
+}
+
+extension Person: NamedModel {}
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
@@ -27,8 +33,9 @@ class ViewController: UIViewController {
         }))
 
         // section 1
+        let sponge = Person(name: "Sponge bob", address: "Under the sea")
         let section1 = DataSourceSection(data: [
-            Person(name: "Sponge bob", address: "Under the see"),
+            sponge,
             Person(name: "Patrick", address: "Near Sponge Bob"),
             Company(name: "EA", address: "Shitload")
         ])
@@ -51,19 +58,33 @@ class ViewController: UIViewController {
 
         // selection
         dataSource.onSelect { (model: Person) in
-            print("Person selected \(model.name)")
+            print("👱🏻 Person selected \(model.name)")
         }
         dataSource.onSelect { (model: Company) in
-            print("Company selected \(model.name)")
+            print("🏚 Company selected \(model.name)")
         }
         dataSource.onSelectCallback = { model in
-            print("Generic model Selected \(model)")
+            print("🌎 Generic model Selected \(model)")
             if let person = model as? Person {
-                print("Global select \(person)")
+                print("🌎👱🏻  Global select \(person)")
             } else if let company = model as? Company {
-                print("Global select \(company)")
+                print("🌎🏚 Global select \(company)")
             }
         }
+
+        dataSource.animation = .right
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.dataSource.section(at: 0)?.deleteObject(where: { (obj: Person) in
+                obj.name == sponge.name
+            })
+//            self.delete(sponge)
+        }
     }
+
+//    func delete<Model: DataSourceModel & NamedModel>(_ model: Model) {
+//        dataSource.section(at: 0)?.deleteObject(where: { (obj: Model) -> Bool in
+//            return obj.name == model.name
+//        })
+//    }
 }
 

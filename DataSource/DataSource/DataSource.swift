@@ -29,6 +29,9 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     /// Internal store of sections
     private var sections: [DataSourceSection] = []
 
+    /// TableView's animation Style
+    var animation: UITableViewRowAnimation? = nil
+
     /// Initializer accepts table view which will be server by this data source
     ///
     /// - Parameter tableView: TableView
@@ -69,6 +72,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     func add(section: DataSourceSection) -> Int {
         let index = sections.count
         sections.append(section)
+        section.delegate = self
         tableView.reloadData()
         return index
     }
@@ -88,7 +92,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     ///
     /// - Parameter index: Index of section
     /// - Returns: Data source section or nil if index if out of bounds
-    private func section(at index: Int) -> DataSourceSection? {
+    func section(at index: Int) -> DataSourceSection? {
         guard index < sections.count else { return nil }
         return sections[index]
     }
@@ -170,5 +174,33 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return self.section(at: section)?.footer?.info?.height ?? UITableViewAutomaticDimension
+    }
+}
+
+extension DataSource: DataSourceSectionDelegate {
+    func dataSourceSection(_ section: DataSourceSection, didAddObjectAtIndexPaths indexPaths: [IndexPath]) {
+        if let animation = animation {
+            tableView.performBatchUpdates({
+                self.tableView.insertRows(at: indexPaths, with: animation)
+            }, completion: nil)
+        } else {
+            tableView.reloadData()
+        }
+    }
+
+    func dataSourceSection(_ section: DataSourceSection, didDeleteObjectAtIndexPaths indexPaths: [IndexPath]) {
+        if let animation = animation {
+            tableView.performBatchUpdates({
+                self.tableView.deleteRows(at: indexPaths, with: animation)
+            }, completion: nil)
+        } else {
+            tableView.reloadData()
+        }
+    }
+
+    func indexOfDataSourceSection(_ section: DataSourceSection) -> Int? {
+        return sections.index(where: {
+            $0 === section
+        })
     }
 }

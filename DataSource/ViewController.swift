@@ -14,17 +14,24 @@ protocol NamedModel {
 
 extension Person: NamedModel {}
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    var dataSource: DataSource!
+    private var dataSource: DataSource!
+    private var testObject: Person?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        setupDataSource()
+        addData()
+        operations()
+    }
 
+    private func setupDataSource() {
         dataSource = DataSource(tableView: tableView)
+        dataSource.animation = .right
 
         dataSource.register(cellDescriptor: CellDescriptor(nibClass: PersonCell.self))
         dataSource.register(cellDescriptor: CellDescriptor(cellClass: CompanyCell.self))
@@ -32,31 +39,6 @@ class ViewController: UIViewController {
             cell.textLabel?.text = model.name + " - \(ip)"
         }))
 
-        // section 1
-        let sponge = Person(name: "Sponge bob", address: "Under the sea")
-        let section1 = DataSourceSection(data: [
-            sponge,
-            Person(name: "Patrick", address: "Near Sponge Bob"),
-            Company(name: "EA", address: "Shitload")
-        ])
-        section1.header = .view(DataSourceSection.HeaderFooterViewInfo(identifier: "Header", kind: .klass(klass: SectionHeaderView.self), height: 45.0) { (view: SectionHeaderView, section) in
-            view.title = "Wassup?"
-        })
-        section1.footer = .title("meh 🤖")
-        dataSource.register(section: section1)
-        dataSource.add(section: section1)
-
-        // secion
-        let section2 = DataSourceSection(data: [
-            Dummy(name: "So simple")
-        ])
-        section2.header = .view(DataSourceSection.HeaderFooterViewInfo(identifier: "NibHeader", kind: .nib(name: "NibHeaderView"), height: 24.0, { (view: NibHeaderView, section) in
-            view.label.text = "Lorem Ipsum"
-        }))
-        dataSource.register(section: section2)
-        dataSource.add(section: section2)
-
-        // selection
         dataSource.onSelect { (model: Person) in
             print("👱🏻 Person selected \(model.name)")
         }
@@ -71,13 +53,60 @@ class ViewController: UIViewController {
                 print("🌎🏚 Global select \(company)")
             }
         }
+    }
 
-        dataSource.animation = .right
+    private func addData() {
+        //  custom view class header section
+        let sponge = Person(name: "Sponge bob", address: "Under the sea")
+        let section1 = DataSourceSection(data: [
+            sponge,
+            Person(name: "Patrick", address: "Near Sponge Bob"),
+            Company(name: "EA", address: "Shitload")
+            ])
+        section1.header = .view(DataSourceSection.HeaderFooterViewInfo(identifier: "Header", kind: .klass(klass: SectionHeaderView.self), height: 45.0) { (view: SectionHeaderView, section) in
+            view.title = "Wassup?"
+        })
+        section1.footer = .title("meh 🤖")
+        dataSource.register(section: section1) // additional setup of sections
+        dataSource.add(section: section1)
+
+        // custom view nib header section
+        let section2 = DataSourceSection(data: [
+            Dummy(name: "So simple")
+            ])
+        section2.header = .view(DataSourceSection.HeaderFooterViewInfo(identifier: "NibHeader", kind: .nib(name: "NibHeaderView"), height: 24.0, { (view: NibHeaderView, section) in
+            view.label.text = "Lorem Ipsum"
+        }))
+        dataSource.register(section: section2)
+        dataSource.add(section: section2)
+
+        // simple section
+        let section3 = DataSourceSection(data: [
+            Dummy(name: "Lol kek"),
+            Dummy(name: "Cheburek"),
+            Dummy(name: "👾")
+        ])
+        section3.header = .none
+        dataSource.add(section: section3)
+
+        testObject = sponge
+    }
+
+    private func operations() {
+        guard let testObject = testObject else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.dataSource.section(at: 0)?.deleteObject(where: { (obj: Person) in
-                obj.name == sponge.name
+                obj.name == testObject.name
             })
-//            self.delete(sponge)
+            //            self.delete(sponge)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            self.dataSource.addObjectToTheLastSection(testObject)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+            self.dataSource.deleteObject(atIndexPath: IndexPath(row: 0, section: 0))
         }
     }
 

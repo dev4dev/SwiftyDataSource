@@ -40,6 +40,7 @@ final class DataSourceSection {
     enum HeaderViewKind {
         case title(String)
         case view(HeaderFooterViewInfo)
+        case none
 
         var info: HeaderFooterViewInfo? {
             guard case let .view(info) = self else { return nil }

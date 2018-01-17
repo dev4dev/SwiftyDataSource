@@ -77,6 +77,66 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         return index
     }
 
+    /// Add Object to the end of the section at index
+    ///
+    /// - Parameters:
+    ///   - object: Object
+    ///   - section: Section Index
+    func addObject(_ object: DataSourceModel, toSection section: Int) {
+        if let s = self.section(at: section) {
+            s.addObject(object)
+        } else {
+            fatalError("[DataSource] Adding data: \(object) to non existing section")
+        }
+    }
+
+
+    /// Add Object to the end of the last section
+    ///
+    /// - Parameter object: Object
+    func addObjectToTheLastSection(_ object: DataSourceModel) {
+        let sectionsCount = sections.count
+        guard sectionsCount > 0 else { return }
+
+        let lastSectionIndex = sectionsCount - 1
+        addObject(object, toSection: lastSectionIndex)
+    }
+
+    /// Add Objects array to the end of the section at index
+    ///
+    /// - Parameters:
+    ///   - objects: Objects array
+    ///   - section: Secrion Index
+    func addObjects(_ objects: [DataSourceModel], toSection section: Int) {
+        if let s = self.section(at: section) {
+            s.addObjects(objects)
+        } else {
+            fatalError("[DataSource] Adding data: \(objects) to non existing section")
+        }
+    }
+
+    /// Insert Object at IndexPath
+    ///
+    /// - Parameters:
+    ///   - object: Object
+    ///   - indexPath: IndexPath
+    func insertObject(_ object: DataSourceModel, atIndexPath indexPath: IndexPath) {
+        if let s = self.section(at: indexPath.section) {
+            s.insertObject(object, atIndex: (indexPath as NSIndexPath).row)
+        }
+    }
+
+    /// Delete Data Object at IndexPath
+    ///
+    /// - Parameter indexPath: IndexPath
+    func deleteObject(atIndexPath indexPath: IndexPath) {
+        if let s = section(at: indexPath.section) {
+            s.deleteObjectAtIndex(indexPath.row)
+        }
+    }
+
+    // MARK: - Selection
+
     /// Registers model specific row selection callback
     ///
     /// - Parameter callback: Callback which accepts model object
@@ -97,12 +157,11 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         return sections[index]
     }
 
-
     /// Returns object at index pathif exists
     ///
     /// - Parameter indexPath: Index path of object
     /// - Returns: Generic DataSourceModel object or nil if not found
-    private func object(at indexPath: IndexPath) -> DataSourceModel? {
+    func object(at indexPath: IndexPath) -> DataSourceModel? {
         return section(at: indexPath.section)?.object(at: indexPath.row)
     }
 

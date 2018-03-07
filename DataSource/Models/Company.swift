@@ -18,4 +18,4 @@ class Company {
     }
 }
 
-extension Company: DataSourceModel {}
+extension Company: TableDataSourceModel {}

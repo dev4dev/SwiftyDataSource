@@ -1,5 +1,5 @@
 //
-//  DataSourceSection.swift
+//  TableDataSourceSection.swift
 //  DataSource
 //
 //  Created by Alex Antonyuk on 12/13/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DataSourceSectionDelegate: class {
+protocol TableDataSourceSectionDelegate: class {
     /**
      Request section's index from DataSource
 
@@ -16,7 +16,7 @@ protocol DataSourceSectionDelegate: class {
 
      - returns: Section's Index
      */
-    func indexOfDataSourceSection(_ section: DataSourceSection) -> Int?
+    func indexOfDataSourceSection(_ section: TableDataSourceSection) -> Int?
 
     /**
      Notifies delegate after data object insertion
@@ -24,7 +24,7 @@ protocol DataSourceSectionDelegate: class {
      - parameter section:        Section Itself
      - parameter indexPath:    IndexPath of inserted object
      */
-    func dataSourceSection(_ section: DataSourceSection, didAddObjectAtIndexPaths indexPaths: [IndexPath])
+    func dataSourceSection(_ section: TableDataSourceSection, didAddObjectAtIndexPaths indexPaths: [IndexPath])
 
     /**
      Notifies delegate after data object deletion
@@ -32,11 +32,11 @@ protocol DataSourceSectionDelegate: class {
      - parameter section:        Section Itself
      - parameter indexPath:    IndexPath of deleted object
      */
-    func dataSourceSection(_ section: DataSourceSection, didDeleteObjectAtIndexPaths indexPaths: [IndexPath])
+    func dataSourceSection(_ section: TableDataSourceSection, didDeleteObjectAtIndexPaths indexPaths: [IndexPath])
 }
 
 /// Class which represents Section in DataSource
-final class DataSourceSection {
+final class TableDataSourceSection {
     enum HeaderViewKind {
         case title(String)
         case view(HeaderFooterViewInfo)
@@ -55,11 +55,11 @@ final class DataSourceSection {
 
     struct HeaderFooterViewInfo {
         let identifier: String
-        let kind: DataSourceRegisteredViewKind
+        let kind: TableDataSourceRegisteredViewKind
         let height: CGFloat
-        let configure: (UITableViewHeaderFooterView, DataSourceSection) -> Void
+        let configure: (UITableViewHeaderFooterView, TableDataSourceSection) -> Void
 
-        init<View: UITableViewHeaderFooterView>(identifier: String, kind: DataSourceRegisteredViewKind, height: CGFloat, _ configure: @escaping (View, DataSourceSection) -> Void) {
+        init<View: UITableViewHeaderFooterView>(identifier: String, kind: TableDataSourceRegisteredViewKind, height: CGFloat, _ configure: @escaping (View, TableDataSourceSection) -> Void) {
             self.identifier = identifier
             self.kind = kind
             self.height = height
@@ -83,12 +83,12 @@ final class DataSourceSection {
     var header: HeaderViewKind?
     var footer: HeaderViewKind?
 
-    private var objects: [DataSourceModel] = []
+    private var objects: [TableDataSourceModel] = []
     var objectsCount: Int {
         return objects.count
     }
 
-    weak var delegate: DataSource?
+    weak var delegate: TableDataSource?
 
     private func indexPathWithRow(_ row: Int) -> IndexPath {
         return IndexPath(row: row, section: delegate?.indexOfDataSourceSection(self) ?? 0)
@@ -97,11 +97,11 @@ final class DataSourceSection {
     /// Init section with initial dataset
     ///
     /// - Parameter data: Initial data
-    init(data: [DataSourceModel]) {
+    init(data: [TableDataSourceModel]) {
         self.objects = data
     }
 
-    func object(at index: Int) -> DataSourceModel? {
+    func object(at index: Int) -> TableDataSourceModel? {
         guard index < objects.count else { return nil }
         return objects[index]
     }
@@ -113,7 +113,7 @@ final class DataSourceSection {
 
      - returns: IndexPath of added object
      */
-    @discardableResult func addObject(_ object: DataSourceModel) -> IndexPath {
+    @discardableResult func addObject(_ object: TableDataSourceModel) -> IndexPath {
         var indexPath: IndexPath?
         operationsQueue.sync(flags: .barrier, execute: { [unowned self] in
             let row = self.objectsCount
@@ -131,7 +131,7 @@ final class DataSourceSection {
 
      - returns: IndexPath array of added objects
      */
-    @discardableResult func addObjects(_ objects: [DataSourceModel]) -> [IndexPath] {
+    @discardableResult func addObjects(_ objects: [TableDataSourceModel]) -> [IndexPath] {
         return objects.map({ (object) in
             return addObject(object)
         })
@@ -145,7 +145,7 @@ final class DataSourceSection {
 
      - returns: IndexPath of inserted Object, nil if index is out of bounds
      */
-    @discardableResult func insertObject(_ object: DataSourceModel, atIndex index: Int) -> IndexPath? {
+    @discardableResult func insertObject(_ object: TableDataSourceModel, atIndex index: Int) -> IndexPath? {
         guard index <= objects.count else { return nil }
 
         var indexPath: IndexPath? = nil
@@ -183,7 +183,7 @@ final class DataSourceSection {
 
      - returns: IndexPath of deleted object
      */
-    @discardableResult func deleteObject<Model: DataSourceModel>(where eq: (Model) -> Bool) -> IndexPath? {
+    @discardableResult func deleteObject<Model: TableDataSourceModel>(where eq: (Model) -> Bool) -> IndexPath? {
         guard let index = objects.index(where: { obj in
             guard let model = obj as? Model else { return false }
             return eq(model)
@@ -202,7 +202,7 @@ final class DataSourceSection {
     ///
     /// - Parameter object: Data Object
     /// - Returns: IndexPath of deleted object
-    @discardableResult func delete<Model: DataSourceModel>(object: Model) -> IndexPath? where Model: Equatable {
+    @discardableResult func delete<Model: TableDataSourceModel>(object: Model) -> IndexPath? where Model: Equatable {
         return deleteObject { model -> Bool in
             model == object
         }

@@ -18,7 +18,7 @@ class Person {
     }
 }
 
-extension Person: DataSourceModel {}
+extension Person: TableDataSourceModel {}
 extension Person: Equatable {
     /// Returns a Boolean value indicating whether two values are equal.
     ///

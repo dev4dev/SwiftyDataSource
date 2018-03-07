@@ -18,7 +18,7 @@ final class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    private var dataSource: DataSource!
+    private var dataSource: TableDataSource!
     private var testObject: Person?
 
     override func viewDidLoad() {
@@ -30,12 +30,12 @@ final class ViewController: UIViewController {
     }
 
     private func setupDataSource() {
-        dataSource = DataSource(tableView: tableView)
+        dataSource = TableDataSource(tableView: tableView)
         dataSource.animation = .right
 
-        dataSource.register(cellDescriptor: CellDescriptor(nibClass: PersonCell.self))
-        dataSource.register(cellDescriptor: CellDescriptor(cellClass: CompanyCell.self))
-        dataSource.register(cellDescriptor: CellDescriptor(kind: .klass(klass: UITableViewCell.self), { (cell, ip, model: Dummy) in
+        dataSource.register(cellDescriptor: TableCellDescriptor(nibClass: PersonCell.self))
+        dataSource.register(cellDescriptor: TableCellDescriptor(cellClass: CompanyCell.self))
+        dataSource.register(cellDescriptor: TableCellDescriptor(kind: .klass(klass: UITableViewCell.self), { (cell, ip, model: Dummy) in
             cell.textLabel?.text = model.name + " - \(ip)"
         }))
 
@@ -58,12 +58,12 @@ final class ViewController: UIViewController {
     private func addData() {
         //  custom view class header section
         let sponge = Person(name: "Sponge bob", address: "Under the sea")
-        let section1 = DataSourceSection(data: [
+        let section1 = TableDataSourceSection(data: [
             sponge,
             Person(name: "Patrick", address: "Near Sponge Bob"),
             Company(name: "EA", address: "Shitload")
             ])
-        section1.header = .view(DataSourceSection.HeaderFooterViewInfo(identifier: "Header", kind: .klass(klass: SectionHeaderView.self), height: 45.0) { (view: SectionHeaderView, section) in
+        section1.header = .view(TableDataSourceSection.HeaderFooterViewInfo(identifier: "Header", kind: .klass(klass: SectionHeaderView.self), height: 45.0) { (view: SectionHeaderView, section) in
             view.title = "Wassup?"
         })
         section1.footer = .title("meh 🤖")
@@ -71,17 +71,17 @@ final class ViewController: UIViewController {
         dataSource.add(section: section1)
 
         // custom view nib header section
-        let section2 = DataSourceSection(data: [
+        let section2 = TableDataSourceSection(data: [
             Dummy(name: "So simple")
             ])
-        section2.header = .view(DataSourceSection.HeaderFooterViewInfo(identifier: "NibHeader", kind: .nib(name: "NibHeaderView"), height: 24.0, { (view: NibHeaderView, section) in
+        section2.header = .view(TableDataSourceSection.HeaderFooterViewInfo(identifier: "NibHeader", kind: .nib(name: "NibHeaderView"), height: 24.0, { (view: NibHeaderView, section) in
             view.label.text = "Lorem Ipsum"
         }))
         dataSource.register(section: section2)
         dataSource.add(section: section2)
 
         // simple section
-        let section3 = DataSourceSection(data: [
+        let section3 = TableDataSourceSection(data: [
             Dummy(name: "Lol kek"),
             Dummy(name: "Cheburek"),
             Dummy(name: "👾")

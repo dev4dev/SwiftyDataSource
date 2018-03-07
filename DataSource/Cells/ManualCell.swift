@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class ManualCell: UITableViewCell, DataSourceCell {
+final class ManualCell: UITableViewCell, TableDataSourceCell {
 
     static func configure(cell: ManualCell, indexPath: IndexPath, model: Person) {
         cell.textLabel?.text = model.name + " - row \(indexPath.row)"

@@ -1,5 +1,5 @@
 //
-//  DataSourceModel.swift
+//  TableDataSourceModel.swift
 //  DataSource
 //
 //  Created by Alex Antonyuk on 12/13/17.
@@ -9,12 +9,12 @@
 import Foundation
 
 /// Protocol Model classes should conform to to be used with DataSource
-protocol DataSourceModel {
+protocol TableDataSourceModel {
     static var _Model_Name: String { get }
     var _Model_Name: String { get }
 }
 
-extension DataSourceModel {
+extension TableDataSourceModel {
     static var _Model_Name: String {
         return String(describing: type(of: self)).components(separatedBy: ".").first!
     }

@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct Dummy: DataSourceModel {
+struct Dummy: TableDataSourceModel {
     let name: String
 }

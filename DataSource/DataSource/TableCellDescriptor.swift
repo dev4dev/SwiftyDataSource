@@ -1,5 +1,5 @@
 //
-//  CellDescriptor.swift
+//  TableCellDescriptor.swift
 //  DataSource
 //
 //  Created by Alex Antonyuk on 12/13/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum DataSourceRegisteredViewKind {
+enum TableDataSourceRegisteredViewKind {
     case klass(klass: AnyClass)
     case nib(name: String)
 
@@ -22,12 +22,12 @@ enum DataSourceRegisteredViewKind {
     }
 }
 
-struct CellDescriptor {
+struct TableCellDescriptor {
 
     var identifier: String {
         return kind.identifier
     }
-    let kind: DataSourceRegisteredViewKind
+    let kind: TableDataSourceRegisteredViewKind
     let modelClassName: String
 
     let configure: (UITableViewCell, IndexPath, Any) -> Void
@@ -41,16 +41,16 @@ struct CellDescriptor {
         }
     }
 
-    init<Cell: DataSourceCell>(cellClass: Cell.Type) {
-        self.init(kind: DataSourceRegisteredViewKind.klass(klass: cellClass), cellClass: cellClass)
+    init<Cell: TableDataSourceCell>(cellClass: Cell.Type) {
+        self.init(kind: TableDataSourceRegisteredViewKind.klass(klass: cellClass), cellClass: cellClass)
     }
 
-    init<Cell: DataSourceCell>(nibClass: Cell.Type) {
+    init<Cell: TableDataSourceCell>(nibClass: Cell.Type) {
         let nibName = String(String(describing: type(of: nibClass)).components(separatedBy: ".").first!)
-        self.init(kind: DataSourceRegisteredViewKind.nib(name: nibName), cellClass: nibClass)
+        self.init(kind: TableDataSourceRegisteredViewKind.nib(name: nibName), cellClass: nibClass)
     }
 
-    init<Cell: UITableViewCell, Model: DataSourceModel>(kind: DataSourceRegisteredViewKind, _ config: @escaping (Cell, IndexPath, Model) -> Void) {
+    init<Cell: UITableViewCell, Model: TableDataSourceModel>(kind: TableDataSourceRegisteredViewKind, _ config: @escaping (Cell, IndexPath, Model) -> Void) {
         self.kind = kind
         self.configure = { cell, indexPath, model in
             config(cell as! Cell, indexPath, model as! Model)
@@ -58,7 +58,7 @@ struct CellDescriptor {
         self.modelClassName = Model._Model_Name
     }
 
-    private init<Cell: DataSourceCell>(kind: DataSourceRegisteredViewKind, cellClass: Cell.Type) {
+    private init<Cell: TableDataSourceCell>(kind: TableDataSourceRegisteredViewKind, cellClass: Cell.Type) {
         self.kind = kind
         self.modelClassName = Cell.Model._Model_Name
         self.configure = { cell, indexPath, model in

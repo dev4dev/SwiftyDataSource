@@ -1,5 +1,5 @@
 //
-//  DataSource.swift
+//  TableDataSource.swift
 //  DataSource
 //
 //  Created by Alex Antonyuk on 12/1/17.
@@ -11,23 +11,23 @@ import UIKit
 
 
 // MARK: - DataSource
-final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
+final class TableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     /// Table View instance
     let tableView: UITableView
 
 
     /// Cell descriptiors associated with the model they is working with
-    private var descriptors: [String: CellDescriptor] = [:]
+    private var descriptors: [String: TableCellDescriptor] = [:]
 
     /// Selection callbacks associated with the model they will for for
-    private var callbacks: [String: (DataSourceModel) -> Void] = [:]
+    private var callbacks: [String: (TableDataSourceModel) -> Void] = [:]
 
     /// General selection callback which will be called for every row
-    var onSelectCallback: (DataSourceModel) -> () = { _ in }
+    var onSelectCallback: (TableDataSourceModel) -> () = { _ in }
 
     /// Internal store of sections
-    private var sections: [DataSourceSection] = []
+    private var sections: [TableDataSourceSection] = []
 
     /// TableView's animation Style
     var animation: UITableViewRowAnimation? = nil
@@ -50,7 +50,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     /// Register Cell Descriptor
     ///
     /// - Parameter cellDescriptor: Cell Descriptor
-    func register(cellDescriptor: CellDescriptor) {
+    func register(cellDescriptor: TableCellDescriptor) {
         cellDescriptor.register(in: tableView)
         descriptors[cellDescriptor.modelClassName] = cellDescriptor
     }
@@ -59,7 +59,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     /// Register section. Used when section has header/footer instantiated from class/nib
     ///
     /// - Parameter section: Section object
-    func register(section: DataSourceSection) {
+    func register(section: TableDataSourceSection) {
         section.header?.info?.register(in: tableView)
         section.footer?.info?.register(in: tableView)
     }
@@ -69,7 +69,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     /// - Parameter section: Section
     /// - Returns: Index were section was added at
     @discardableResult
-    func add(section: DataSourceSection) -> Int {
+    func add(section: TableDataSourceSection) -> Int {
         let index = sections.count
         sections.append(section)
         section.delegate = self
@@ -82,7 +82,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     /// - Parameters:
     ///   - object: Object
     ///   - section: Section Index
-    func addObject(_ object: DataSourceModel, toSection section: Int) {
+    func addObject(_ object: TableDataSourceModel, toSection section: Int) {
         if let s = self.section(at: section) {
             s.addObject(object)
         } else {
@@ -94,7 +94,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     /// Add Object to the end of the last section
     ///
     /// - Parameter object: Object
-    func addObjectToTheLastSection(_ object: DataSourceModel) {
+    func addObjectToTheLastSection(_ object: TableDataSourceModel) {
         let sectionsCount = sections.count
         guard sectionsCount > 0 else { return }
 
@@ -107,7 +107,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     /// - Parameters:
     ///   - objects: Objects array
     ///   - section: Secrion Index
-    func addObjects(_ objects: [DataSourceModel], toSection section: Int) {
+    func addObjects(_ objects: [TableDataSourceModel], toSection section: Int) {
         if let s = self.section(at: section) {
             s.addObjects(objects)
         } else {
@@ -120,7 +120,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     /// - Parameters:
     ///   - object: Object
     ///   - indexPath: IndexPath
-    func insertObject(_ object: DataSourceModel, atIndexPath indexPath: IndexPath) {
+    func insertObject(_ object: TableDataSourceModel, atIndexPath indexPath: IndexPath) {
         if let s = self.section(at: indexPath.section) {
             s.insertObject(object, atIndex: (indexPath as NSIndexPath).row)
         }
@@ -140,7 +140,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     /// Registers model specific row selection callback
     ///
     /// - Parameter callback: Callback which accepts model object
-    func onSelect<Model: DataSourceModel>(_ callback: @escaping (Model) -> Void) {
+    func onSelect<Model: TableDataSourceModel>(_ callback: @escaping (Model) -> Void) {
         callbacks[Model._Model_Name] = { model in
             callback(model as! Model)
         }
@@ -152,7 +152,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     ///
     /// - Parameter index: Index of section
     /// - Returns: Data source section or nil if index if out of bounds
-    func section(at index: Int) -> DataSourceSection? {
+    func section(at index: Int) -> TableDataSourceSection? {
         guard index < sections.count else { return nil }
         return sections[index]
     }
@@ -161,7 +161,7 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     ///
     /// - Parameter indexPath: Index path of object
     /// - Returns: Generic DataSourceModel object or nil if not found
-    func object(at indexPath: IndexPath) -> DataSourceModel? {
+    func object(at indexPath: IndexPath) -> TableDataSourceModel? {
         return section(at: indexPath.section)?.object(at: indexPath.row)
     }
 
@@ -236,8 +236,8 @@ final class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension DataSource: DataSourceSectionDelegate {
-    func dataSourceSection(_ section: DataSourceSection, didAddObjectAtIndexPaths indexPaths: [IndexPath]) {
+extension TableDataSource: TableDataSourceSectionDelegate {
+    func dataSourceSection(_ section: TableDataSourceSection, didAddObjectAtIndexPaths indexPaths: [IndexPath]) {
         if let animation = animation {
             tableView.performBatchUpdates({
                 self.tableView.insertRows(at: indexPaths, with: animation)
@@ -247,7 +247,7 @@ extension DataSource: DataSourceSectionDelegate {
         }
     }
 
-    func dataSourceSection(_ section: DataSourceSection, didDeleteObjectAtIndexPaths indexPaths: [IndexPath]) {
+    func dataSourceSection(_ section: TableDataSourceSection, didDeleteObjectAtIndexPaths indexPaths: [IndexPath]) {
         if let animation = animation {
             tableView.performBatchUpdates({
                 self.tableView.deleteRows(at: indexPaths, with: animation)
@@ -257,7 +257,7 @@ extension DataSource: DataSourceSectionDelegate {
         }
     }
 
-    func indexOfDataSourceSection(_ section: DataSourceSection) -> Int? {
+    func indexOfDataSourceSection(_ section: TableDataSourceSection) -> Int? {
         return sections.index(where: {
             $0 === section
         })

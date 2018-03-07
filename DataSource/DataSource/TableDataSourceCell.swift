@@ -1,5 +1,5 @@
 //
-//  DataSourceCell.swift
+//  TableDataSourceCell.swift
 //  DataSource
 //
 //  Created by Alex Antonyuk on 12/13/17.
@@ -10,14 +10,14 @@ import Foundation
 
 
 /// Protocol UITableViewCell subclaass should confrom to to be able work with the DataSource
-protocol DataSourceCell: class {
-    associatedtype Model: DataSourceModel
+protocol TableDataSourceCell: class {
+    associatedtype Model: TableDataSourceModel
     static func configure(cell: Self, indexPath: IndexPath, model: Model)
 }
 
 
 /// Improved cell which makes UI updates inside of its class, and only exposes model property. It simplifies configuration of DataSource
-protocol DataSourceModelCell: DataSourceCell {
+protocol DataSourceModelCell: TableDataSourceCell {
     var model: Model? { get set }
 }
 

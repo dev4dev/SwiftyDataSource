@@ -95,10 +95,11 @@ final class ViewController: UIViewController {
     private func operations() {
         guard let testObject = testObject else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.dataSource.section(at: 0)?.deleteObject(where: { (obj: Person) in
-                obj.name == testObject.name
-            })
+//            self.dataSource.section(at: 0)?.deleteObject(where: { (obj: Person) in
+//                obj.name == testObject.name
+//            })
             //            self.delete(sponge)
+            self.dataSource.section(at: 0)?.delete(object: testObject)
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {

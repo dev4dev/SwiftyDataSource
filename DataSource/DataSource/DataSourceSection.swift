@@ -177,7 +177,7 @@ final class DataSourceSection {
     }
 
     /**
-     Delete Data Object from the section
+     Delete Data Object from the Section
 
      - parameter object:    Data Object
 
@@ -196,6 +196,16 @@ final class DataSourceSection {
             self.delegate?.dataSourceSection(self, didDeleteObjectAtIndexPaths: [indexPath!])
         })
         return indexPath
+    }
+    
+    /// Delete DAta Object from the Section
+    ///
+    /// - Parameter object: Data Object
+    /// - Returns: IndexPath of deleted object
+    @discardableResult func delete<Model: DataSourceModel>(object: Model) -> IndexPath? where Model: Equatable {
+        return deleteObject { model -> Bool in
+            model == object
+        }
     }
 
     /**
